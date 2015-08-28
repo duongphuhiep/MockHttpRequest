@@ -107,6 +107,28 @@ must not forget to clean up by stopping the server::
   server.stop();
 
 
+Hybrid
+------
+
+Sometimes we want to keep the default `XMLHttpRequest`, and only use `MockXMLHttpRequest` on some specific components.
+In this specific component, we will use some kind of IOC pattern
+
+    makeAJAXCall(HttpRequestImpl) {
+        var request = new HttpRequestImpl();
+        request.onload(..);
+    };
+
+on production we will use the normal `XMLHttpRequest`
+
+    makeAJAXCall(XMLHttpRequest)
+
+on test we will use the `MockXMLHttpRequest`
+
+    server.start(true);
+    makeAJAXCall(MockXMLHttpRequest);
+    server.stop();
+
+
 About
 -----
 
